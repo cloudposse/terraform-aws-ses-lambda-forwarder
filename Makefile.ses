@@ -1,0 +1,14 @@
+NPM ?= docker run -it -v $(pwd)/lambda/:/code -w /code --entrypoint=npm  node:8.10-alpine
+
+## Build lambda package
+build:
+	$(NPM) update
+	sudo chmod -R 777 lambda
+	cd lambda && zip -r ../lambda.zip * && cd ../
+
+## Verify $EMAIL used as gateway for forwarding
+verify_gateway_email:
+	$(call assert-set,REGION)
+	$(call assert-set,EMAIL)
+	aws --region=$(REGION) ses verify-email-identity --email-address $(EMAIL)
+
