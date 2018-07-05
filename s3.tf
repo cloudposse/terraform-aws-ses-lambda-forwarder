@@ -14,7 +14,7 @@ data "aws_iam_policy_document" "s3" {
 
     principals {
       identifiers = ["ses.amazonaws.com"]
-      type = "Service"
+      type        = "Service"
     }
 
     actions = ["s3:PutObject"]
@@ -22,11 +22,10 @@ data "aws_iam_policy_document" "s3" {
     resources = ["${aws_s3_bucket.default.arn}/*"]
 
     condition {
-      test = "StringEquals"
-      values = ["${data.aws_caller_identity.current.account_id}"]
+      test     = "StringEquals"
+      values   = ["${data.aws_caller_identity.current.account_id}"]
       variable = "aws:Referer"
     }
-
   }
 }
 

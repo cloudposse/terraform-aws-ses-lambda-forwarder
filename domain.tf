@@ -11,23 +11,24 @@ resource "aws_route53_record" "default" {
   records = ["${aws_ses_domain_identity.default.verification_token}"]
 }
 
-# Example Route53 MX record
+# Add Route53 MX record
 resource "aws_route53_record" "mx" {
   zone_id = "${data.aws_route53_zone.default.zone_id}"
   name    = "${aws_ses_domain_identity.default.id}"
   type    = "MX"
   ttl     = "600"
   records = ["10 inbound-smtp.${var.region}.amazonaws.com"]
+
   # Change to the region in which `aws_ses_domain_identity.example` is created
 }
 
-# Example Route53 TXT record for SPF
+# Add Route53 TXT record for SPF
 resource "aws_route53_record" "txt" {
   zone_id = "${data.aws_route53_zone.default.zone_id}"
   name    = "${aws_ses_domain_identity.default.id}"
   type    = "TXT"
   ttl     = "600"
-  records = ["v=spf1 include:amazonses.com -all"]
+  records = ["${var.spf}"]
 }
 
 resource "aws_ses_domain_identity" "default" {
