@@ -169,14 +169,6 @@ Available targets:
 
 
 
-## Related Projects
-
-Check out these related projects.
-
-- [fluentd-datadog-logs](https://github.com/cloudposse/fluentd-datadog-logs) - Dockerfile that implements fluentd log forwarding to datadog's new log service
-
-
-
 ## Help
 
 **Got a question?**

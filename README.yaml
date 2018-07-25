@@ -28,11 +28,6 @@ badges:
     image: "https://slack.cloudposse.com/badge.svg"
     url: "https://slack.cloudposse.com"
 
-related:
-  - name: "fluentd-datadog-logs"
-    description: "Dockerfile that implements fluentd log forwarding to datadog's new log service"
-    url: "https://github.com/cloudposse/fluentd-datadog-logs"
-
 # Short description of this project
 description: |-
   Module creates email forwarder based on AWS SES and AWS lambda.
