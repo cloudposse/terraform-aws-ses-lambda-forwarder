@@ -5,7 +5,7 @@
 # terraform-aws-ses-lambda-forwarder [![Build Status](https://travis-ci.org/cloudposse/terraform-aws-ses-lambda-forwarder.svg?branch=master)](https://travis-ci.org/cloudposse/terraform-aws-ses-lambda-forwarder) [![Latest Release](https://img.shields.io/github/release/cloudposse/terraform-aws-ses-lambda-forwarder.svg)](https://github.com/cloudposse/terraform-aws-ses-lambda-forwarder/releases/latest) [![Slack Community](https://slack.cloudposse.com/badge.svg)](https://slack.cloudposse.com)
 
 
-Module creates email forwarder based on AWS SES and AWS lambda.
+This is a terraform module that creates an email forwarder using a combination of AWS SES and Lambda running the [aws-lambda-ses-forwarder](https://www.npmjs.com/package/aws-lambda-ses-forwarder) NPM module.
 
 
 ---
@@ -23,12 +23,41 @@ It's 100% Open Source and licensed under the [APACHE2](LICENSE).
 
 
 
+## Introduction
+
+This module provisions a NodeJS script as a AWS Lambda function that uses the inbound/outbound capabilities of AWS Simple Email Service (SES) to run a "serverless" email forwarding service.
+
+Use this module instead of setting up an email server on a dedicated EC2 instance to handle email redirects. It uses AWS SES to receive email and then trigger a Lambda function to process it and forward it on to the chosen destination.  This script will allow forwarding emails from any sender to verified destination emails (e.g. opt-in).
+
+## Limitations
+
+The SES service only allows sending email from verified addresses or domains. As such, it's mostly suitable for transactional emails (e.g. alerts or notifications). The incoming messages are modified to allow forwarding through SES and reflect the original sender. This script adds a `Reply-To` header with the original sender's email address, but the `From` header is changed to display the SES email address.
+
+For example, an email sent by `John Doe <jonh@example.com>` to `hello@example.com` will be transformed to:
+```
+From: John Doe at john@example.com <hello@example.com> 
+Reply-To: john@example.com
+```
+
+To override this behavior, set a verified `fromEmail` address (e.g., `noreply@example.com`) in the config 
+object and the header will look like this.
+```
+From: John Doe <noreply@example.com>
+Reply-To: john@example.com
+```
+
+__NOTE__: SES only allows receiving email sent to addresses within verified domains. For more information, 
+see: http://docs.aws.amazon.com/ses/latest/DeveloperGuide/verify-domains.html
+```
+
+Initially SES users are in a sandbox environment that has a number of limitations. See: 
+http://docs.aws.amazon.com/ses/latest/DeveloperGuide/limits.html
 
 ## Usage
 
 ```hcl
 variable "relay_email" {
-  default = "example@example.com"
+  default     = "example@example.com"
   description = "Email that used to relay from"
 }
 
@@ -68,85 +97,9 @@ module "ses" {
 ```
 Available targets:
 
-  aws/install                         Install aws cli bundle
-  bash/lint                           Lint all bash scripts
-  build                               Build lambda package
-  chamber/install                     Install chamber
-  clean                               Clean build-harness
-  codefresh/trigger/webhook           Trigger a CodeFresh WebHook
-  docker/build                        Build docker image
-  docker/login                        Login into docker hub
-  docs/copyright-add                  Add copyright headers to source code
-  geodesic/deploy                     Run a Jenkins Job to Deploy $(APP) with $(CANONICAL_TAG)
-  git/aliases-update                  Update git aliases
-  git/export                          Export git vars
-  git/show                            Show vars
-  git/submodules-update               Update submodules
-  github/download-private-release     Download release from github
-  github/download-public-release      Download release from github
-  go/build                            Build binary
-  go/build-all                        Build binary for all platforms
-  go/clean                            Clean compiled binary
-  go/clean-all                        Clean compiled binary and dependency
-  go/deps                             Install dependencies
-  go/deps-build                       Install dependencies for build
-  go/deps-dev                         Install development dependencies
-  go/fmt                              Format code according to Golang convention
-  go/install                          Install cli
-  go/lint                             Lint code
-  go/test                             Run tests
-  go/vet                              Vet code
-  helm/chart/build                    Build chart $CHART_NAME from $CHART_TPL
-  helm/chart/build-all                Build chart $CHART_NAME from $CHART_TPL for all available $SEMVERSIONS
-  helm/chart/clean                    Clean chart packages
-  helm/chart/create                   Create chart $CHART from starter scaffold
-  helm/chart/publish                  Publish chart $CHART_NAME to $REPO_GATEWAY_ENDPOINT
-  helm/chart/starter/fetch            Fetch starter
-  helm/chart/starter/remove           Remove starter
-  helm/chart/starter/update           Update starter
-  helm/delete/failed                  Delete all failed releases in a `NAMESPACE` subject to `FILTER`
-  helm/delete/namespace               Delete all releases in a `NAMEPSACE` as well as the namespace
-  helm/install                        Install helm
-  helm/repo/add                       Add $REPO_NAME from $REPO_ENDPOINT
-  helm/repo/add-current               Add helm remote dev repos
-  helm/repo/add-remote                Add helm remote repos
-  helm/repo/build                     Build repo
-  helm/repo/clean                     Clean helm repo
-  helm/repo/fix-perms                 Fix repo filesystem permissions
-  helm/repo/info                      Show repo info
-  helm/repo/lint                      Lint charts
-  helm/repo/update                    Update repo info
-  helm/serve/index                    Build index for serve helm charts
-  helm/toolbox/upsert                 Install or upgrade helm tiller 
-  helmfile/install                    Install helmfile
   help                                This help screen
   help/all                            Display help for all targets
-  init                                Init build-harness
-  jenkins/run-job-with-tag            Run a Jenkins Job with $(TAG)
   lint                                Lint terraform code
-  make/lint                           Lint all makefiles
-  packages/delete                     Delete packages
-  packages/install                    Install packages 
-  packages/install/%                  Install package (e.g. helm, helmfile, kubectl)
-  packages/reinstall                  Reinstall packages
-  packages/uninstall/%                Uninstall package (e.g. helm, helmfile, kubectl)
-  readme                              Alias for readme/build
-  readme/build                        Create README.md by building it from README.yaml
-  readme/init                         Create basic minimalistic .README.md template file
-  readme/lint                         Verify the `README.md` is up to date
-  semver/export                       Export semver vars
-  semver/show                         Show
-  stages/export                       Export stages vars
-  template/build                      Create $OUT file by building it from $IN template file
-  template/deps                       Install dependencies
-  terraform/get-modules               Ensure all modules can be fetched
-  terraform/get-plugins               Ensure all plugins can be fetched
-  terraform/install                   Install terraform
-  terraform/lint                      Lint check Terraform
-  terraform/validate                  Basic terraform sanity check
-  travis/docker-login                 Login into docker hub
-  travis/docker-tag-and-push          Tag & Push according Travis environment variables
-  verify_gateway_email                Verify $EMAIL used as gateway for forwarding
 
 ```
 
@@ -167,6 +120,14 @@ Available targets:
 | tags | Additional tags (e.g. map(`BusinessUnit`,`XYZ`) | map | `<map>` | no |
 
 
+
+
+
+## References
+
+For additional context, refer to some of these links. 
+
+- [aws-lambda-ses-forwarder](https://www.npmjs.com/package/aws-lambda-ses-forwarder) - A Node.js script for AWS Lambda that uses the inbound/outbound capabilities of AWS Simple Email Service (SES) to run a "serverless" email forwarding service.
 
 
 ## Help
