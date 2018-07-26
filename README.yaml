@@ -1,0 +1,111 @@
+---
+#
+# This is the canonical configuration for the `README.md`
+# Run `make readme` to rebuild the `README.md`
+#
+
+# Name of this project
+name: terraform-aws-ses-lambda-forwarder
+
+# Logo for this project
+#logo: docs/logo.png
+
+# License of this project
+license: "APACHE2"
+
+# Canonical GitHub repo
+github_repo: cloudposse/terraform-aws-ses-lambda-forwarder
+
+# Badges to display
+badges:
+  - name: "Build Status"
+    image: "https://travis-ci.org/cloudposse/terraform-aws-ses-lambda-forwarder.svg?branch=master"
+    url: "https://travis-ci.org/cloudposse/terraform-aws-ses-lambda-forwarder"
+  - name: "Latest Release"
+    image: "https://img.shields.io/github/release/cloudposse/terraform-aws-ses-lambda-forwarder.svg"
+    url: "https://github.com/cloudposse/terraform-aws-ses-lambda-forwarder/releases/latest"
+  - name: "Slack Community"
+    image: "https://slack.cloudposse.com/badge.svg"
+    url: "https://slack.cloudposse.com"
+
+# Short description of this project
+description: |-
+  This is a terraform module that creates an email forwarder using a combination of AWS SES and Lambda running the [aws-lambda-ses-forwarder](https://www.npmjs.com/package/aws-lambda-ses-forwarder) NPM module.
+
+introduction: |-
+  This module provisions a NodeJS script as a AWS Lambda function that uses the inbound/outbound capabilities of AWS Simple Email Service (SES) to run a "serverless" email forwarding service.
+
+  Use this module instead of setting up an email server on a dedicated EC2 instance to handle email redirects. It uses AWS SES to receive email and then trigger a Lambda function to process it and forward it on to the chosen destination.  This script will allow forwarding emails from any sender to verified destination emails (e.g. opt-in).
+
+  ## Limitations
+
+  The SES service only allows sending email from verified addresses or domains. As such, it's mostly suitable for transactional emails (e.g. alerts or notifications). The incoming messages are modified to allow forwarding through SES and reflect the original sender. This script adds a `Reply-To` header with the original sender's email address, but the `From` header is changed to display the SES email address.
+
+  For example, an email sent by `John Doe <jonh@example.com>` to `hello@example.com` will be transformed to:
+  ```
+  From: John Doe at john@example.com <hello@example.com> 
+  Reply-To: john@example.com
+  ```
+
+  To override this behavior, set a verified `fromEmail` address (e.g., `noreply@example.com`) in the config 
+  object and the header will look like this.
+  ```
+  From: John Doe <noreply@example.com>
+  Reply-To: john@example.com
+  ```
+
+  __NOTE__: SES only allows receiving email sent to addresses within verified domains. For more information, 
+  see: http://docs.aws.amazon.com/ses/latest/DeveloperGuide/verify-domains.html
+  ```
+
+  Initially SES users are in a sandbox environment that has a number of limitations. See: 
+  http://docs.aws.amazon.com/ses/latest/DeveloperGuide/limits.html
+
+# How to use this project
+usage: |-
+  ```hcl
+  variable "relay_email" {
+    default     = "example@example.com"
+    description = "Email that used to relay from"
+  }
+
+  variable "forward_emails" {
+    type = "map"
+
+    default = {
+      "some_email@example.com"  = ["my_email@example.com"]
+      "other_email@example.com" = ["my_email@example.com"]
+    }
+
+    description = "Emails forward map"
+  }
+
+  module "ses" {
+    source = "git::https://github.com/cloudposse/terraform-aws-ses-lambda-forwarder.git?ref=tags/0.1.0"
+
+    namespace = "${var.namespace}"
+    name      = "${var.ses_name}"
+    stage     = "${var.stage}"
+
+    region = "${var.ses_region}"
+
+    relay_email = "${var.relay_email}"
+    domain      = "${var.parent_domain_name}"
+
+    forward_emails = "${var.forward_emails}"
+  }
+  ```
+
+references:
+  - name: "aws-lambda-ses-forwarder"
+    description: "A Node.js script for AWS Lambda that uses the inbound/outbound capabilities of AWS Simple Email Service (SES) to run a \"serverless\" email forwarding service."
+    url: "https://www.npmjs.com/package/aws-lambda-ses-forwarder"
+
+include:
+  - "docs/targets.md"
+  - "docs/terraform.md"
+
+# Contributors to this project
+contributors:
+  - name: "Igor Rodionov"
+    github: "goruha"
