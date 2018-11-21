@@ -16,12 +16,12 @@ resource "aws_ses_receipt_rule" "default" {
 
   s3_action {
     bucket_name = "${aws_s3_bucket.default.bucket}"
-    position    = 0
+    position    = 1
   }
 
   lambda_action {
     function_arn = "${aws_lambda_function.default.arn}"
-    position     = 1
+    position     = 2
   }
 
   depends_on = ["aws_ses_receipt_rule_set.default", "aws_s3_bucket_policy.default"]
