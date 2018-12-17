@@ -23,7 +23,7 @@ script:
 deploy:
   # Deploy artifacts to S3
   - provider: s3
-    s3_region: "us-west-2"
+    region: "us-west-2"
     access_key_id: $AWS_ACCESS_KEY_ID
     secret_access_key: $AWS_SECRET_ACCESS_KEY
     bucket: artifacts.prod.cloudposse.org
