@@ -7,5 +7,4 @@ export README_DEPS ?= docs/targets.md docs/terraform.md
 lint:
 	$(SELF) terraform/install terraform/get-modules terraform/get-plugins terraform/lint terraform/validate
 	
-include Makefile.helpers
 include Makefile.ses

@@ -1,13 +1,19 @@
-NPM ?= docker run -it -v $(pwd)/lambda/:/code -w /code --entrypoint=npm  node:8.10-alpine
+NPM ?= docker run -it -v $(shell pwd)/lambda/:/code -w /code --entrypoint=npm node:8.10-alpine
+
+# Ensures that a variable is defined
+define assert-set
+  @[ -n "$($1)" ] || (echo "$(1) not defined in $(@)"; exit 1)
+endef
 
 ## Build lambda package
 build:
 	$(NPM) update
 	sudo chmod -R 777 lambda
-	cd lambda && zip -r ../lambda.zip * && cd ../
+	mkdir -p artifacts
+	cd lambda && zip -r ../artifacts/lambda.zip *
 
 ## Verify $EMAIL used as gateway for forwarding
-verify_gateway_email:
+verify-gateway-email:
 	$(call assert-set,REGION)
 	$(call assert-set,EMAIL)
 	aws --region=$(REGION) ses verify-email-identity --email-address $(EMAIL)

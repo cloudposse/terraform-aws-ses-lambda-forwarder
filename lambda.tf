@@ -66,12 +66,19 @@ resource "aws_iam_role_policy_attachment" "lambda" {
   policy_arn = "${aws_iam_policy.lambda.arn}"
 }
 
+module "artifact" {
+  source      = "git::https://github.com/cloudposse/terraform-external-module-artifact.git?ref=tags/0.1.1"
+  filename    = "lambda.zip"
+  module_name = "terraform-aws-ses-lambda-forwarder"
+  module_path = "${path.module}"
+}
+
 resource "aws_lambda_function" "default" {
-  filename         = "${join("/", list(path.module, "lambda.zip"))}"
+  filename         = "${module.artifact.file}"
   function_name    = "${module.label.id}"
   role             = "${aws_iam_role.lambda.arn}"
   handler          = "index.handler"
-  source_code_hash = "${base64sha256(file(join("/", list(path.module, "lambda.zip"))))}"
+  source_code_hash = "${module.artifact.base64sha256}"
   runtime          = "nodejs8.10"
 
   environment {

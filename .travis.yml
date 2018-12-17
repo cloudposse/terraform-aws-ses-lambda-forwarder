@@ -5,6 +5,10 @@ addons:
       - make
       - curl
 
+env:
+  global:
+    - TERRAFORM_MODULE_NAME="$(basename $TRAVIS_REPO_SLUG)"
+
 install:
   - make init
 
@@ -14,3 +18,19 @@ script:
   - make terraform/get-modules
   - make terraform/lint
   - make terraform/validate
+  - make build
+
+deploy:
+  # Deploy artifacts to S3
+  - provider: s3
+    region: "us-west-2"
+    access_key_id: $AWS_ACCESS_KEY_ID
+    secret_access_key: $AWS_SECRET_ACCESS_KEY
+    bucket: artifacts.prod.cloudposse.org
+    skip_cleanup: true
+    upload-dir: $TERRAFORM_MODULE_NAME/$TRAVIS_COMMIT
+    local-dir: artifacts
+    on:
+      all_branches: true
+
+
