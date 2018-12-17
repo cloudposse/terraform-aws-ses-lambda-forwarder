@@ -1,4 +1,4 @@
-NPM ?= docker run -it -v $(pwd)/lambda/:/code -w /code --entrypoint=npm  node:8.10-alpine
+NPM ?= docker run -it -v $(shell pwd)/lambda/:/code -w /code --entrypoint=npm node:8.10-alpine
 
 # Ensures that a variable is defined
 define assert-set
