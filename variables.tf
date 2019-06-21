@@ -1,33 +1,33 @@
 variable "namespace" {
-  type        = "string"
+  type        = string
   description = "Namespace (e.g. `cp` or `cloudposse`)"
 }
 
 variable "stage" {
-  type        = "string"
+  type        = string
   description = "Stage (e.g. `prod`, `dev`, `staging`)"
 }
 
 variable "name" {
-  type        = "string"
+  type        = string
   description = "Application or solution name (e.g. `app`)"
   default     = "ses"
 }
 
 variable "delimiter" {
-  type        = "string"
+  type        = string
   default     = "-"
   description = "Delimiter to be used between `namespace`, `stage`, `name` and `attributes`"
 }
 
 variable "attributes" {
-  type        = "list"
+  type        = list(string)
   default     = []
   description = "Additional attributes (e.g. `1`)"
 }
 
 variable "tags" {
-  type        = "map"
+  type        = map(string)
   default     = {}
   description = "Additional tags (e.g. map(`BusinessUnit`,`XYZ`)"
 }
@@ -37,7 +37,7 @@ variable "relay_email" {
 }
 
 variable "forward_emails" {
-  type = "map"
+  type = map(string)
 
   default = {
     "ops@example.com" = ["destination@example.com"]
@@ -47,12 +47,12 @@ variable "forward_emails" {
 }
 
 variable "domain" {
-  type        = "string"
+  type        = string
   description = "Root domain name"
 }
 
 variable "region" {
-  type        = "string"
+  type        = string
   description = "AWS Region the SES should reside in"
   default     = "us-west-2"
 }
@@ -61,3 +61,4 @@ variable "spf" {
   default     = "v=spf1 include:amazonses.com -all"
   description = "DNS SPF record value"
 }
+
