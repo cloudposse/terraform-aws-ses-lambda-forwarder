@@ -5,7 +5,7 @@ namespace = "eg"
 
 stage = "test"
 
-name = "ses-lambda-forwarder"
+name = "lambda-forwarder-test"
 
 relay_email = "example@example.com"
 
