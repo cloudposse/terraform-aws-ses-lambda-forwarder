@@ -1,4 +1,5 @@
-region = "us-east-2"
+# https://docs.aws.amazon.com/general/latest/gr/ses.html
+region = "us-east-1"
 
 namespace = "eg"
 
