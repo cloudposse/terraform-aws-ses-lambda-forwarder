@@ -8,15 +8,14 @@ data "aws_iam_policy_document" "assume" {
     }
 
     actions = [
-      "sts:AssumeRole",
+      "sts:AssumeRole"
     ]
   }
 }
 
 resource "aws_iam_role" "lambda" {
-  name = "${module.label.id}"
-
-  assume_role_policy = "${data.aws_iam_policy_document.assume.json}"
+  name               = module.label.id
+  assume_role_policy = data.aws_iam_policy_document.assume.json
 }
 
 data "aws_iam_policy_document" "lambda" {
@@ -26,7 +25,7 @@ data "aws_iam_policy_document" "lambda" {
     actions = [
       "logs:CreateLogGroup",
       "logs:CreateLogStream",
-      "logs:PutLogEvents",
+      "logs:PutLogEvents"
     ]
 
     resources = ["*"]
@@ -37,7 +36,7 @@ data "aws_iam_policy_document" "lambda" {
 
     actions = [
       "ses:SendEmail",
-      "ses:SendRawEmail",
+      "ses:SendRawEmail"
     ]
 
     resources = ["*"]
@@ -48,7 +47,7 @@ data "aws_iam_policy_document" "lambda" {
 
     actions = [
       "s3:GetObject",
-      "s3:PutObject",
+      "s3:PutObject"
     ]
 
     resources = ["${aws_s3_bucket.default.arn}/*"]
@@ -56,37 +55,37 @@ data "aws_iam_policy_document" "lambda" {
 }
 
 resource "aws_iam_policy" "lambda" {
-  name        = "${module.label.id}"
+  name        = module.label.id
   description = "Allow put logs, use s3 to store email and sent emails with SES"
-  policy      = "${data.aws_iam_policy_document.lambda.json}"
+  policy      = data.aws_iam_policy_document.lambda.json
 }
 
 resource "aws_iam_role_policy_attachment" "lambda" {
-  role       = "${aws_iam_role.lambda.name}"
-  policy_arn = "${aws_iam_policy.lambda.arn}"
+  role       = aws_iam_role.lambda.name
+  policy_arn = aws_iam_policy.lambda.arn
 }
 
 module "artifact" {
-  source      = "git::https://github.com/cloudposse/terraform-external-module-artifact.git?ref=tags/0.1.1"
+  source      = "git::https://github.com/cloudposse/terraform-external-module-artifact.git?ref=tags/0.2.0"
   filename    = "lambda.zip"
   module_name = "terraform-aws-ses-lambda-forwarder"
-  module_path = "${path.module}"
+  module_path = path.module
 }
 
 resource "aws_lambda_function" "default" {
-  filename         = "${module.artifact.file}"
-  function_name    = "${module.label.id}"
-  role             = "${aws_iam_role.lambda.arn}"
+  filename         = module.artifact.file
+  function_name    = module.label.id
+  role             = aws_iam_role.lambda.arn
   handler          = "index.handler"
-  source_code_hash = "${module.artifact.base64sha256}"
-  runtime          = "nodejs8.10"
+  source_code_hash = module.artifact.base64sha256
+  runtime          = var.lambda_runtime
 
   environment {
     variables = {
-      EMAIL_FROM        = "${var.relay_email}"
-      EMAIL_BUCKET_NAME = "${aws_s3_bucket.default.bucket}"
+      EMAIL_FROM        = var.relay_email
+      EMAIL_BUCKET_NAME = aws_s3_bucket.default.bucket
       EMAIL_BUCKET_PATH = ""
-      EMAIL_MAPPING     = "${jsonencode(var.forward_emails)}"
+      EMAIL_MAPPING     = jsonencode(var.forward_emails)
     }
   }
 }
@@ -94,14 +93,14 @@ resource "aws_lambda_function" "default" {
 resource "aws_lambda_alias" "default" {
   name             = "default"
   description      = "Use latest version as default"
-  function_name    = "${aws_lambda_function.default.function_name}"
+  function_name    = aws_lambda_function.default.function_name
   function_version = "$LATEST"
 }
 
 resource "aws_lambda_permission" "ses" {
   statement_id   = "AllowExecutionFromSES"
   action         = "lambda:InvokeFunction"
-  function_name  = "${aws_lambda_function.default.function_name}"
+  function_name  = aws_lambda_function.default.function_name
   principal      = "ses.amazonaws.com"
-  source_account = "${data.aws_caller_identity.current.account_id}"
+  source_account = data.aws_caller_identity.current.account_id
 }

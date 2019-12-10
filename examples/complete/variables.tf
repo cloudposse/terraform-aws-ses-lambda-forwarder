@@ -1,19 +1,16 @@
 variable "namespace" {
   type        = string
   description = "Namespace (e.g. `cp` or `cloudposse`)"
-  default     = ""
 }
 
 variable "stage" {
   type        = string
   description = "Stage (e.g. `prod`, `dev`, `staging`)"
-  default     = ""
 }
 
 variable "name" {
   type        = string
   description = "Application or solution name (e.g. `app`)"
-  default     = "ses"
 }
 
 variable "delimiter" {
@@ -40,12 +37,7 @@ variable "relay_email" {
 }
 
 variable "forward_emails" {
-  type = map(string)
-
-  default = {
-    "ops@example.com" = ["destination@example.com"]
-  }
-
+  type        = map(string)
   description = "Map of forward emails"
 }
 
@@ -61,12 +53,10 @@ variable "region" {
 
 variable "spf" {
   type        = string
-  default     = "v=spf1 include:amazonses.com -all"
   description = "DNS SPF record value"
 }
 
 variable "lambda_runtime" {
   type        = string
   description = "Lambda runtime"
-  default     = "nodejs8.10"
 }
