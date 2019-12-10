@@ -70,3 +70,15 @@ variable "lambda_runtime" {
   description = "Lambda runtime"
   default     = "nodejs8.10"
 }
+
+variable "artifact_url" {
+  type        = string
+  description = "URL template for the remote artifact"
+  default     = "https://artifacts.cloudposse.com/$$${module_name}/$$${git_ref}/$$${filename}"
+}
+
+variable "artifact_filename" {
+  type        = string
+  description = "Artifact filename"
+  default     = "lambda.zip"
+}

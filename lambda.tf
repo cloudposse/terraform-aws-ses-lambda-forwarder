@@ -67,9 +67,10 @@ resource "aws_iam_role_policy_attachment" "lambda" {
 
 module "artifact" {
   source      = "git::https://github.com/cloudposse/terraform-external-module-artifact.git?ref=tags/0.2.0"
-  filename    = "lambda.zip"
+  filename    = var.artifact_filename
   module_name = "terraform-aws-ses-lambda-forwarder"
   module_path = path.module
+  url         = var.artifact_url
 }
 
 resource "aws_lambda_function" "default" {

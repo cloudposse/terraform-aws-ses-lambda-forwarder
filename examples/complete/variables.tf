@@ -60,3 +60,13 @@ variable "lambda_runtime" {
   type        = string
   description = "Lambda runtime"
 }
+
+variable "artifact_url" {
+  type        = string
+  description = "URL template for the remote artifact"
+}
+
+variable "artifact_filename" {
+  type        = string
+  description = "Artifact filename"
+}

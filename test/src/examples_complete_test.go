@@ -2,6 +2,7 @@ package test
 
 import (
 	"github.com/gruntwork-io/terratest/modules/terraform"
+	"github.com/stretchr/testify/assert"
 	"testing"
 )
 
@@ -22,4 +23,14 @@ func TestExamplesComplete(t *testing.T) {
 
 	// This will run `terraform init` and `terraform apply` and fail the test if there are any errors
 	terraform.InitAndApply(t, terraformOptions)
+
+	//// Run `terraform output` to get the value of an output variable
+	//file := terraform.Output(t, terraformOptions, "artifact_file")
+	//// Verify we're getting back the outputs we expect
+	//assert.Equal(t, "./lambda.zip", file)
+
+	// Run `terraform output` to get the value of an output variable
+	url := terraform.Output(t, terraformOptions, "artifact_url")
+	// Verify we're getting back the outputs we expect
+	assert.Equal(t, "https://artifacts.cloudposse.com/terraform-external-module-artifact/example/test.zip", url)
 }

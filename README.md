@@ -174,6 +174,8 @@ Available targets:
 
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
+| artifact_filename | Artifact filename | string | `lambda.zip` | no |
+| artifact_url | URL template for the remote artifact | string | `https://artifacts.cloudposse.com/$$${module_name}/$$${git_ref}/$$${filename}` | no |
 | attributes | Additional attributes (e.g. `1`) | list(string) | `<list>` | no |
 | delimiter | Delimiter to be used between `namespace`, `stage`, `name` and `attributes` | string | `-` | no |
 | domain | Root domain name | string | - | yes |
