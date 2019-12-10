@@ -1,6 +1,5 @@
 data "aws_route53_zone" "default" {
-  name    = var.domain
-  comment = "Root DNS Zone"
+  name = var.domain
 }
 
 resource "aws_route53_record" "default" {
