@@ -37,7 +37,7 @@ variable "relay_email" {
 }
 
 variable "forward_emails" {
-  type        = map(string)
+  type        = map(list(string))
   description = "Map of forward emails"
 }
 

@@ -5,7 +5,7 @@
 | attributes | Additional attributes (e.g. `1`) | list(string) | `<list>` | no |
 | delimiter | Delimiter to be used between `namespace`, `stage`, `name` and `attributes` | string | `-` | no |
 | domain | Root domain name | string | - | yes |
-| forward_emails | Map of forward emails | map(string) | `<map>` | no |
+| forward_emails | Map of forward emails | map(list(string)) | `<map>` | no |
 | lambda_runtime | Lambda runtime | string | `nodejs8.10` | no |
 | name | Application or solution name (e.g. `app`) | string | `ses` | no |
 | namespace | Namespace (e.g. `cp` or `cloudposse`) | string | `` | no |
