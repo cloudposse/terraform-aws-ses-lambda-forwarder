@@ -127,7 +127,7 @@ variable "relay_email" {
 }
 
 variable "forward_emails" {
-  type = map
+  type = map(list(string))
 
   default = {
     "some_email@example.com"  = ["my_email@example.com"]
