@@ -1,37 +1,16 @@
----
-#
-# This is the canonical configuration for the `README.md`
-# Run `make readme` to rebuild the `README.md`
-#
-
-# Name of this project
 name: terraform-aws-ses-lambda-forwarder
-
-# Logo for this project
-#logo: docs/logo.png
-
-# License of this project
-license: "APACHE2"
-
-# Canonical GitHub repo
+license: APACHE2
 github_repo: cloudposse/terraform-aws-ses-lambda-forwarder
-
-# Badges to display
 badges:
-  - name: "Codefresh Build Status"
-    image: "https://g.codefresh.io/api/badges/pipeline/cloudposse/terraform-modules%2Fterraform-aws-ses-lambda-forwarder?type=cf-1"
-    url: "https://g.codefresh.io/public/accounts/cloudposse/pipelines/5defd0c4158ef27f981fe4dd"
-  - name: "Latest Release"
-    image: "https://img.shields.io/github/release/cloudposse/terraform-aws-ses-lambda-forwarder.svg"
-    url: "https://github.com/cloudposse/terraform-aws-ses-lambda-forwarder/releases/latest"
-  - name: "Slack Community"
-    image: "https://slack.cloudposse.com/badge.svg"
-    url: "https://slack.cloudposse.com"
-
-# Short description of this project
-description: |-
-  This is a terraform module that creates an email forwarder using a combination of AWS SES and Lambda running the [aws-lambda-ses-forwarder](https://www.npmjs.com/package/aws-lambda-ses-forwarder) NPM module.
-
+- name: Latest Release
+  image: https://img.shields.io/github/release/cloudposse/terraform-aws-ses-lambda-forwarder.svg
+  url: https://github.com/cloudposse/terraform-aws-ses-lambda-forwarder/releases/latest
+- name: Slack Community
+  image: https://slack.cloudposse.com/badge.svg
+  url: https://slack.cloudposse.com
+description: This is a terraform module that creates an email forwarder using a combination
+  of AWS SES and Lambda running the [aws-lambda-ses-forwarder](https://www.npmjs.com/package/aws-lambda-ses-forwarder)
+  NPM module.
 introduction: |-
   This module provisions a NodeJS script as a AWS Lambda function that uses the inbound/outbound capabilities of AWS Simple Email Service (SES) to run a "serverless" email forwarding service.
 
@@ -60,9 +39,7 @@ introduction: |-
 
   Initially SES users are in a sandbox environment that has a number of limitations. See:
   http://docs.aws.amazon.com/ses/latest/DeveloperGuide/limits.html
-
-# How to use this project
-usage: |-
+usage: |2-
 
   For a complete example, see [examples/complete](examples/complete).
 
@@ -102,21 +79,18 @@ usage: |-
     forward_emails = var.forward_emails
   }
   ```
-
 references:
-  - name: "aws-lambda-ses-forwarder"
-    description: "A Node.js script for AWS Lambda that uses the inbound/outbound capabilities of AWS Simple Email Service (SES) to run a \"serverless\" email forwarding service."
-    url: "https://www.npmjs.com/package/aws-lambda-ses-forwarder"
-
+- name: aws-lambda-ses-forwarder
+  description: A Node.js script for AWS Lambda that uses the inbound/outbound capabilities
+    of AWS Simple Email Service (SES) to run a "serverless" email forwarding service.
+  url: https://www.npmjs.com/package/aws-lambda-ses-forwarder
 include:
-  - "docs/targets.md"
-  - "docs/terraform.md"
-
-# Contributors to this project
+- docs/targets.md
+- docs/terraform.md
 contributors:
-  - name: "Igor Rodionov"
-    github: "goruha"
-  - name: "Erik Osterman"
-    github: "osterman"
-  - name: "Andriy Knysh"
-    github: "aknysh"
+- name: Igor Rodionov
+  github: goruha
+- name: Erik Osterman
+  github: osterman
+- name: Andriy Knysh
+  github: aknysh
