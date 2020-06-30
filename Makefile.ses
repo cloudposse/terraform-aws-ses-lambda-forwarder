@@ -1,4 +1,8 @@
+ifndef CI
 NPM ?= docker run -it -v $(shell pwd)/lambda/:/code -w /code --entrypoint=npm node:8.10-alpine
+else
+NPM ?= npm
+endif
 
 # Ensures that a variable is defined
 define assert-set
