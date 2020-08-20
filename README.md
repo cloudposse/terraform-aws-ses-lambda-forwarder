@@ -156,7 +156,7 @@ Available targets:
 
 | Name | Version |
 |------|---------|
-| terraform | ~> 0.12.0 |
+| terraform | >= 0.12.0 |
 | aws | ~> 2.0 |
 | external | ~> 1.2 |
 | local | ~> 1.3 |
@@ -178,7 +178,7 @@ Available targets:
 | delimiter | Delimiter to be used between `namespace`, `stage`, `name` and `attributes` | `string` | `"-"` | no |
 | domain | Root domain name | `string` | n/a | yes |
 | forward\_emails | Map of forward emails | `map(list(string))` | <pre>{<br>  "ops@example.com": [<br>    "destination@example.com"<br>  ]<br>}</pre> | no |
-| lambda\_runtime | Lambda runtime | `string` | `"nodejs8.10"` | no |
+| lambda\_runtime | Lambda runtime | `string` | `"nodejs12.x"` | no |
 | name | Application or solution name (e.g. `app`) | `string` | `"ses"` | no |
 | namespace | Namespace (e.g. `cp` or `cloudposse`) | `string` | `""` | no |
 | region | AWS Region the SES should reside in | `string` | n/a | yes |
