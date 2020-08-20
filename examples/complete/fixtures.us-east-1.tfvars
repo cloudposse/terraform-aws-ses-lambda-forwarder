@@ -18,7 +18,7 @@ domain = "testing.cloudposse.co"
 
 spf = "v=spf1 include:amazonses.com -all"
 
-lambda_runtime = "nodejs8.10"
+lambda_runtime = "nodejs12.x"
 
 artifact_url = "https://artifacts.cloudposse.com/terraform-external-module-artifact/example/test.zip"
 
