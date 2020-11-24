@@ -1,3 +1,4 @@
+<!-- markdownlint-disable -->
 ## Requirements
 
 | Name | Version |
@@ -55,3 +56,4 @@
 | ses\_receipt\_rule\_name | The name of the SES receipt rule |
 | ses\_receipt\_rule\_set\_name | The name of the SES receipt rule set |
 
+<!-- markdownlint-restore -->

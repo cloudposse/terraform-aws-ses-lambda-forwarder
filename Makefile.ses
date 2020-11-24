@@ -1,7 +1,7 @@
 ifndef CI
-NPM ?= docker run -it -v $(shell pwd)/lambda/:/code -w /code --entrypoint=npm node:8.10-alpine
+BUILD ?= docker run -it -v $(shell pwd)/lambda/:/code -w /code --entrypoint=npm node:10-alpine update --unsafe-perm=true --allow-root
 else
-NPM ?= npm
+BUILD ?= cd lambda/ && npm update && cd ..
 endif
 
 # Ensures that a variable is defined
@@ -11,7 +11,7 @@ endef
 
 ## Build lambda package
 build:
-	$(NPM) update
+	$(BUILD)
 	sudo chmod -R 777 lambda
 	mkdir -p artifacts
 	cd lambda && zip -r ../artifacts/lambda.zip *
