@@ -1,9 +1,9 @@
 resource "aws_s3_bucket" "default" {
-  bucket        = module.label.id
+  bucket        = module.this.id
   region        = var.region
   force_destroy = true
 
-  tags = module.label.tags
+  tags = module.this.tags
 }
 
 data "aws_iam_policy_document" "s3" {

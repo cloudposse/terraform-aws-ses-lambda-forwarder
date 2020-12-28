@@ -14,7 +14,7 @@ data "aws_iam_policy_document" "assume" {
 }
 
 resource "aws_iam_role" "lambda" {
-  name               = module.label.id
+  name               = module.this.id
   assume_role_policy = data.aws_iam_policy_document.assume.json
 }
 
@@ -55,7 +55,7 @@ data "aws_iam_policy_document" "lambda" {
 }
 
 resource "aws_iam_policy" "lambda" {
-  name        = module.label.id
+  name        = module.this.id
   description = "Allow put logs, use s3 to store email and sent emails with SES"
   policy      = data.aws_iam_policy_document.lambda.json
 }
@@ -66,7 +66,8 @@ resource "aws_iam_role_policy_attachment" "lambda" {
 }
 
 module "artifact" {
-  source      = "git::https://github.com/cloudposse/terraform-external-module-artifact.git?ref=tags/0.4.0"
+  source      = "cloudposse/module-artifact/external"
+  version     = "0.4.0"
   filename    = var.artifact_filename
   module_name = "terraform-aws-ses-lambda-forwarder"
   module_path = path.module
@@ -75,7 +76,7 @@ module "artifact" {
 
 resource "aws_lambda_function" "default" {
   filename         = module.artifact.file
-  function_name    = module.label.id
+  function_name    = module.this.id
   role             = aws_iam_role.lambda.arn
   handler          = "index.handler"
   source_code_hash = module.artifact.base64sha256
