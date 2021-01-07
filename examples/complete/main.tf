@@ -5,13 +5,6 @@ provider "aws" {
 module "ses_lambda_forwarder" {
   source = "../../"
 
-  namespace  = var.namespace
-  stage      = var.stage
-  name       = var.name
-  delimiter  = var.delimiter
-  attributes = var.attributes
-  tags       = var.tags
-
   region = var.region
   domain = var.domain
 
@@ -23,4 +16,6 @@ module "ses_lambda_forwarder" {
 
   artifact_url      = var.artifact_url
   artifact_filename = var.artifact_filename
+
+  context = module.this.context
 }
