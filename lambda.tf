@@ -90,6 +90,10 @@ resource "aws_lambda_function" "default" {
       EMAIL_MAPPING     = jsonencode(var.forward_emails)
     }
   }
+
+  tracing_config {
+    mode = var.tracing_config_mode
+  }
 }
 
 resource "aws_lambda_alias" "default" {
