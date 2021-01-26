@@ -4,6 +4,9 @@
 # .tfstate files
 *.tfstate
 *.tfstate.*
+**/.terraform.lock.hcl
+
+test.log
 
 **/node_modules/*
 **/package-lock.json

@@ -16,6 +16,7 @@ data "aws_iam_policy_document" "assume" {
 resource "aws_iam_role" "lambda" {
   name               = module.this.id
   assume_role_policy = data.aws_iam_policy_document.assume.json
+  tags               = module.this.tags
 }
 
 data "aws_iam_policy_document" "lambda" {
@@ -81,6 +82,7 @@ resource "aws_lambda_function" "default" {
   handler          = "index.handler"
   source_code_hash = module.artifact.base64sha256
   runtime          = var.lambda_runtime
+  tags             = module.this.tags
 
   environment {
     variables = {
@@ -89,6 +91,10 @@ resource "aws_lambda_function" "default" {
       EMAIL_BUCKET_PATH = ""
       EMAIL_MAPPING     = jsonencode(var.forward_emails)
     }
+  }
+
+  tracing_config {
+    mode = var.tracing_config_mode
   }
 }
 

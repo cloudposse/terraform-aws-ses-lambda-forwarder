@@ -46,3 +46,33 @@ variable "artifact_filename" {
   description = "Artifact filename"
   default     = "lambda.zip"
 }
+
+variable "versioning_enabled" {
+  type        = bool
+  default     = true
+  description = "A state of versioning. Versioning is a means of keeping multiple variants of an object in the same bucket"
+}
+
+variable "mfa_delete" {
+  type        = bool
+  description = "A boolean that indicates that versions of S3 objects can only be deleted with MFA. ( Terraform cannot apply changes of this value; https://github.com/terraform-providers/terraform-provider-aws/issues/629 )"
+  default     = true
+}
+
+variable "tracing_config_mode" {
+  type        = string
+  description = "Can be either PassThrough or Active. If PassThrough, Lambda will only trace the request from an upstream service if it contains a tracing header with 'sampled=1'. If Active, Lambda will respect any tracing header it receives from an upstream service."
+  default     = "PassThrough"
+}
+
+variable "access_log_bucket_name" {
+  type        = string
+  default     = ""
+  description = "Name of the S3 bucket where s3 access log will be sent to"
+}
+
+variable "s3_bucket_encryption_enabled" {
+  type        = bool
+  default     = true
+  description = "When set to 'true' the 'aws_s3_bucket' resource will have AES256 encryption enabled by default"
+}
