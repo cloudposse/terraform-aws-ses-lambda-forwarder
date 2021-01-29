@@ -16,7 +16,6 @@ module "ses_lambda_forwarder" {
 
   artifact_url      = var.artifact_url
   artifact_filename = var.artifact_filename
-  mfa_delete        = var.mfa_delete
 
   context = module.this.context
 }
