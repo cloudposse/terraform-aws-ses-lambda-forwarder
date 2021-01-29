@@ -23,5 +23,3 @@ lambda_runtime = "nodejs12.x"
 artifact_url = "https://artifacts.cloudposse.com/terraform-external-module-artifact/example/test.zip"
 
 artifact_filename = "lambda.zip"
-
-mfa_delete = false
