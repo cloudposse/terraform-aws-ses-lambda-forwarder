@@ -26,7 +26,7 @@ jobs:
            make terraform/lint
            make terraform/validate
         env:
-          TERRAFORM_VERSION: 0.13
+          TERRAFORM_VERSION: 0.13.6
 
       - name: Build
         run: make build
