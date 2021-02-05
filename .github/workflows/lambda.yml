@@ -9,6 +9,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      TERRAFORM_VERSION: "0.13.6" 
     steps:
       # Checkout the pull request branch
       - name: Checkout code
