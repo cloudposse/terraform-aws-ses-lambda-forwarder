@@ -15,6 +15,35 @@
 |------|---------|
 | aws | >= 2.0 |
 
+## Modules
+
+| Name | Source | Version |
+|------|--------|---------|
+| artifact | cloudposse/module-artifact/external | 0.7.0 |
+| this | cloudposse/label/null | 0.24.1 |
+
+## Resources
+
+| Name |
+|------|
+| [aws_caller_identity](https://registry.terraform.io/providers/hashicorp/aws/2.0/docs/data-sources/caller_identity) |
+| [aws_iam_policy](https://registry.terraform.io/providers/hashicorp/aws/2.0/docs/resources/iam_policy) |
+| [aws_iam_policy_document](https://registry.terraform.io/providers/hashicorp/aws/2.0/docs/data-sources/iam_policy_document) |
+| [aws_iam_role](https://registry.terraform.io/providers/hashicorp/aws/2.0/docs/resources/iam_role) |
+| [aws_iam_role_policy_attachment](https://registry.terraform.io/providers/hashicorp/aws/2.0/docs/resources/iam_role_policy_attachment) |
+| [aws_lambda_alias](https://registry.terraform.io/providers/hashicorp/aws/2.0/docs/resources/lambda_alias) |
+| [aws_lambda_function](https://registry.terraform.io/providers/hashicorp/aws/2.0/docs/resources/lambda_function) |
+| [aws_lambda_permission](https://registry.terraform.io/providers/hashicorp/aws/2.0/docs/resources/lambda_permission) |
+| [aws_route53_record](https://registry.terraform.io/providers/hashicorp/aws/2.0/docs/resources/route53_record) |
+| [aws_route53_zone](https://registry.terraform.io/providers/hashicorp/aws/2.0/docs/data-sources/route53_zone) |
+| [aws_s3_bucket](https://registry.terraform.io/providers/hashicorp/aws/2.0/docs/resources/s3_bucket) |
+| [aws_s3_bucket_policy](https://registry.terraform.io/providers/hashicorp/aws/2.0/docs/resources/s3_bucket_policy) |
+| [aws_ses_active_receipt_rule_set](https://registry.terraform.io/providers/hashicorp/aws/2.0/docs/resources/ses_active_receipt_rule_set) |
+| [aws_ses_domain_identity](https://registry.terraform.io/providers/hashicorp/aws/2.0/docs/resources/ses_domain_identity) |
+| [aws_ses_domain_identity_verification](https://registry.terraform.io/providers/hashicorp/aws/2.0/docs/resources/ses_domain_identity_verification) |
+| [aws_ses_receipt_rule](https://registry.terraform.io/providers/hashicorp/aws/2.0/docs/resources/ses_receipt_rule) |
+| [aws_ses_receipt_rule_set](https://registry.terraform.io/providers/hashicorp/aws/2.0/docs/resources/ses_receipt_rule_set) |
+
 ## Inputs
 
 | Name | Description | Type | Default | Required |
@@ -68,5 +97,4 @@
 | ses\_domain\_identity\_verification\_arn | The ARN of the domain identity |
 | ses\_receipt\_rule\_name | The name of the SES receipt rule |
 | ses\_receipt\_rule\_set\_name | The name of the SES receipt rule set |
-
 <!-- markdownlint-restore -->
