@@ -1,6 +1,6 @@
 output "ses_domain_identity_arn" {
   description = "The ARN of the domain identity"
-  value       = aws_ses_domain_identity.default.arn
+  value       = var.domain_validation ? join("", aws_ses_domain_identity.default.*.arn) : null
 }
 
 output "ses_domain_identity_verification_arn" {
