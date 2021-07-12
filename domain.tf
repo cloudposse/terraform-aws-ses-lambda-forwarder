@@ -1,8 +1,14 @@
+# Locals configuration to check if we should create SES validation or not (allow external management of this)
+locals {
+  enable_ses_validation = var.domain_validation ? 1 : 0
+}
+
 data "aws_route53_zone" "default" {
   name = var.domain
 }
 
 resource "aws_route53_record" "default" {
+  count   = local.enable_ses_validation
   zone_id = data.aws_route53_zone.default.zone_id
   name    = "_amazonses.${aws_ses_domain_identity.default.id}"
   type    = "TXT"
@@ -30,11 +36,13 @@ resource "aws_route53_record" "txt" {
 }
 
 resource "aws_ses_domain_identity" "default" {
+  count  = local.enable_ses_validation
   domain = var.domain
 }
 
 resource "aws_ses_domain_identity_verification" "default" {
-  domain = aws_ses_domain_identity.default.id
+  count  = local.enable_ses_validation
+  domain = aws_ses_domain_identity.default.0.id
 
   depends_on = [aws_route53_record.default]
 }

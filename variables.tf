@@ -18,6 +18,12 @@ variable "domain" {
   description = "Root domain name"
 }
 
+variable "domain_validation" {
+  type        = bool
+  default     = true
+  description = "Boolean to enable or disable Route53 zone/domain validation in module"
+}
+
 variable "region" {
   type        = string
   description = "AWS Region the SES should reside in"
