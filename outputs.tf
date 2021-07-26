@@ -1,11 +1,11 @@
 output "ses_domain_identity_arn" {
   description = "The ARN of the domain identity"
-  value       = var.domain_validation ? join("", aws_ses_domain_identity.default.*.arn) : null
+  value       = join("", aws_ses_domain_identity.default.*.arn)
 }
 
 output "ses_domain_identity_verification_arn" {
   description = "The ARN of the domain identity"
-  value       = var.domain_validation ? join("", aws_ses_domain_identity_verification.default.*.arn) : null
+  value       = join("", aws_ses_domain_identity_verification.default.*.arn)
 }
 
 output "artifact_git_ref" {
