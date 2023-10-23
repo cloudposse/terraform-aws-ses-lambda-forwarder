@@ -84,7 +84,6 @@ Reply-To: john@example.com
 
 __NOTE__: SES only allows receiving email sent to addresses within verified domains. For more information,
 see: http://docs.aws.amazon.com/ses/latest/DeveloperGuide/verify-domains.html
-```
 
 Initially SES users are in a sandbox environment that has a number of limitations. See:
 http://docs.aws.amazon.com/ses/latest/DeveloperGuide/limits.html
