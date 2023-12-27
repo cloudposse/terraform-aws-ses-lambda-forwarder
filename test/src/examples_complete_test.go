@@ -37,22 +37,22 @@ func TestExamplesComplete(t *testing.T) {
 	// Run `terraform output` to get the value of an output variable
 	lambdaFunctionArn := terraform.Output(t, terraformOptions, "lambda_function_arn")
 	// Verify we're getting back the outputs we expect
-	assert.Contains(t, lambdaFunctionArn, "function:eg-test-lambda-forwarder-test")
+	assert.Contains(t, lambdaFunctionArn, "function:eg-test-ses-lambda-forwarder-test")
 
 	// Run `terraform output` to get the value of an output variable
 	lambdaIamPolicyArn := terraform.Output(t, terraformOptions, "lambda_iam_policy_arn")
 	// Verify we're getting back the outputs we expect
-	assert.Contains(t, lambdaIamPolicyArn, "policy/eg-test-lambda-forwarder-test")
+	assert.Contains(t, lambdaIamPolicyArn, "policy/eg-test-ses-lambda-forwarder-test")
 
 	// Run `terraform output` to get the value of an output variable
 	lambdaIamPolicyName := terraform.Output(t, terraformOptions, "lambda_iam_policy_name")
 	// Verify we're getting back the outputs we expect
-	assert.Equal(t, "eg-test-lambda-forwarder-test", lambdaIamPolicyName)
+	assert.Equal(t, "eg-test-ses-lambda-forwarder-test", lambdaIamPolicyName)
 
 	// Run `terraform output` to get the value of an output variable
 	s3BucketArn := terraform.Output(t, terraformOptions, "s3_bucket_arn")
 	// Verify we're getting back the outputs we expect
-	assert.Equal(t, "arn:aws:s3:::eg-test-lambda-forwarder-test", s3BucketArn)
+	assert.Equal(t, "arn:aws:s3:::eg-test-ses-lambda-forwarder-test", s3BucketArn)
 
 	// Run `terraform output` to get the value of an output variable
 	sesDomainIdentityArn := terraform.Output(t, terraformOptions, "ses_domain_identity_arn")
@@ -62,10 +62,10 @@ func TestExamplesComplete(t *testing.T) {
 	// Run `terraform output` to get the value of an output variable
 	sesReceiptRuleName := terraform.Output(t, terraformOptions, "ses_receipt_rule_name")
 	// Verify we're getting back the outputs we expect
-	assert.Equal(t, "eg-test-lambda-forwarder-test", sesReceiptRuleName)
+	assert.Equal(t, "eg-test-ses-lambda-forwarder-test", sesReceiptRuleName)
 
 	// Run `terraform output` to get the value of an output variable
 	sesReceiptRuleSetName := terraform.Output(t, terraformOptions, "ses_receipt_rule_set_name")
 	// Verify we're getting back the outputs we expect
-	assert.Equal(t, "eg-test-lambda-forwarder-test", sesReceiptRuleSetName)
+	assert.Equal(t, "eg-test-ses-lambda-forwarder-test", sesReceiptRuleSetName)
 }
