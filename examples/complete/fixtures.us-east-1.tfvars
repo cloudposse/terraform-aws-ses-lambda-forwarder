@@ -5,7 +5,7 @@ namespace = "eg"
 
 stage = "test"
 
-name = "lambda-forwarder-test"
+name = "ses-lambda-forwarder-test"
 
 relay_email = "example@example.com"
 
@@ -18,7 +18,7 @@ domain = "testing.cloudposse.co"
 
 spf = "v=spf1 include:amazonses.com -all"
 
-lambda_runtime = "nodejs12.x"
+lambda_runtime = "nodejs18.x"
 
 artifact_url = "https://artifacts.cloudposse.com/terraform-external-module-artifact/example/test.zip"
 
