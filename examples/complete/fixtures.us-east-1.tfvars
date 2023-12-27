@@ -1,5 +1,5 @@
 # https://docs.aws.amazon.com/general/latest/gr/ses.html
-region = "us-east-1"
+region = "eu-west-1"
 
 namespace = "eg"
 
