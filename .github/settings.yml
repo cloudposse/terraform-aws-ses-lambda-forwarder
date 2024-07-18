@@ -5,3 +5,4 @@ repository:
   description: This is a terraform module that creates an email forwarder using a combination of AWS SES and Lambda running the aws-lambda-ses-forwarder NPM module.
   homepage: https://cloudposse.com/accelerate
   topics: terraform, terraform-modules, terraform-module, aws, ses, lambda, email, forwarding, hcl2
+
