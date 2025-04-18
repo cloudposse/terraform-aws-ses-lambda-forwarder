@@ -1,0 +1,110 @@
+name: "build-and-push-lambda"
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    tags:
+      - "*"
+  pull_request:
+    branches:
+      - main
+permissions:
+  id-token: write
+  contents: read
+
+env:
+  AWS_REGION: us-east-1
+  IAM_ROLE_ARN_S3: arn:aws:iam::847349463865:role/cplive-core-ue2-public-lambda-artifacts-gha
+  IAM_ROLE_SEESION_NAME: cloudposse/terraform-aws-ses-lambda-forwarder/ci
+  S3_BUCKET: cplive-core-ue2-public-lambda-artifacts
+  S3_FOLDER: terraform-aws-ses-lambda-forwarder
+
+jobs:
+  build-test-distribute:
+    runs-on: ubuntu-latest
+    steps:
+      ##################################################
+      # Setup GHA Dependencies
+      ##################################################
+      - name: Use Node.js 16.x
+        uses: actions/setup-node@v4
+        with:
+          node-version: 16.x
+
+      - name: Install Zip
+        run: |
+          sudo apt-get install -y zip
+
+      ##################################################
+      # Checkout the repository
+      ##################################################
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Fetch main branch so we can compare SHA
+        run: git fetch origin main
+
+      ##################################################
+      # Install App Dependencies, Build, Lint, and Test
+      ##################################################
+      - name: Install Dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Lint Affected Projects
+        shell: bash
+        run: npx nx run-many --target=lint --all
+
+      - name: Test Affected Projects
+        shell: bash
+        run: npx nx run-many --target=test --all
+
+      - name: Build Affected Projects
+        shell: bash
+        run: npx nx run-many --target=build --prod --all
+
+      ##################################################
+      # Dynamically Create Version for Zip File
+      ##################################################
+      - name: Metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: dummy
+          tags: |
+            type=raw,value=latest,enable={{is_default_branch}}
+            type=ref,event=pr
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}},enable=${{ startsWith(github.ref, 'refs/tags/') }}
+            type=semver,pattern={{major}},enable=${{ startsWith(github.ref, 'refs/tags/') }}
+            type=sha,prefix=,format=long,enable=${{ !startsWith(github.ref, 'refs/tags/') }}
+
+      ##################################################
+      # Build and Upload Bossy Lambda Zip
+      ##################################################
+      - name: Set ZIP File Name Var
+        shell: bash
+        run: |
+          VERSION=${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.version'] }}
+          echo "FILE_NAME=lambda-github-action-token-rotator-${VERSION}.zip" >> $GITHUB_ENV
+
+      - name: Create Zip File
+        shell: bash
+        run: |
+          cd dist/apps/token-rotator || exit 1
+          zip -r "$FILE_NAME" .
+          mv "./$FILE_NAME" "$GITHUB_WORKSPACE/$FILE_NAME"
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: us-east-2
+          role-to-assume: ${{ env.IAM_ROLE_ARN_S3 }}
+          role-session-name: ${{ env.IAM_ROLE_SESSION_NAME }}
+
+      - name: Copy Lambda to S3
+        shell: bash
+        run: |
+          aws s3 cp "./$FILE_NAME" s3://${{env.S3_BUCKET}}/${{env.S3_FOLDER}}/ --sse AES256 --region ${{ env.AWS_REGION }}
