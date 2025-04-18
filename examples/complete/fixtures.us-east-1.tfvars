@@ -14,7 +14,7 @@ forward_emails = {
   "other_email@example.com" = ["my_email@example.com"]
 }
 
-domain = "testing.cloudposse.co"
+domain = "modules.cptest.test-automation.app"
 
 spf = "v=spf1 include:amazonses.com -all"
 
