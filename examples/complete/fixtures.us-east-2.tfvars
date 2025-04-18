@@ -18,7 +18,7 @@ domain = "modules.cptest.test-automation.app"
 
 spf = "v=spf1 include:amazonses.com -all"
 
-lambda_runtime = "nodejs12.x"
+lambda_runtime = "nodejs22.x"
 
 artifact_url = "https://artifacts.cloudposse.com/terraform-external-module-artifact/example/test.zip"
 
