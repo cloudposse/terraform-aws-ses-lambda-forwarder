@@ -68,7 +68,7 @@ resource "aws_iam_role_policy_attachment" "lambda" {
 
 module "artifact" {
   source      = "cloudposse/module-artifact/external"
-  version     = "0.7.1"
+  version     = "0.8.0"
   filename    = var.artifact_filename
   module_name = "terraform-aws-ses-lambda-forwarder"
   module_path = path.module
