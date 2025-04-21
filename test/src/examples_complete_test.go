@@ -45,7 +45,7 @@ func TestExamplesComplete(t *testing.T) {
 	// Run `terraform output` to get the value of an output variable
 	artifactUrl := terraform.Output(t, terraformOptions, "artifact_url")
 	// Verify we're getting back the outputs we expect
-	assert.Equal(t, "https://cplive-core-ue2-public-lambda-artifacts.s3.us-east-2.amazonaws.com/terraform-aws-ses-lambda-forwarder/terraform-aws-ses-lambda-forwarder-pr-64.zip", artifactUrl)
+	assert.Equal(t, "https://cplive-core-ue2-public-lambda-artifacts.s3.us-east-2.amazonaws.com/terraform-aws-ses-lambda-forwarder/terraform-aws-ses-lambda-forwarder-latest.zip", artifactUrl)
 
 	// Run `terraform output` to get the value of an output variable
 	lambdaFunctionArn := terraform.Output(t, terraformOptions, "lambda_function_arn")
