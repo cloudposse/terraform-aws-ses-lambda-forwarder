@@ -20,6 +20,6 @@ spf = "v=spf1 include:amazonses.com -all"
 
 lambda_runtime = "nodejs22.x"
 
-artifact_url = "https://cplive-core-ue2-public-lambda-artifacts.s3.us-east-2.amazonaws.com/terraform-aws-ses-lambda-forwarder/terraform-aws-ses-lambda-forwarder-pr-64.zip"
+artifact_url = "https://cplive-core-ue2-public-lambda-artifacts.s3.us-east-2.amazonaws.com/terraform-aws-ses-lambda-forwarder/terraform-aws-ses-lambda-forwarder-latest.zip"
 
 artifact_filename = "lambda.zip"
