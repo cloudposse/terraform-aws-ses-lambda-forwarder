@@ -1,5 +1,5 @@
 # https://docs.aws.amazon.com/general/latest/gr/ses.html
-region = "us-east-1"
+region = "us-east-2"
 
 namespace = "eg"
 
@@ -14,12 +14,12 @@ forward_emails = {
   "other_email@example.com" = ["my_email@example.com"]
 }
 
-domain = "testing.cloudposse.co"
+domain = "modules.cptest.test-automation.app"
 
 spf = "v=spf1 include:amazonses.com -all"
 
-lambda_runtime = "nodejs12.x"
+lambda_runtime = "nodejs22.x"
 
-artifact_url = "https://artifacts.cloudposse.com/terraform-external-module-artifact/example/test.zip"
+artifact_url = "https://cplive-core-ue2-public-lambda-artifacts.s3.us-east-2.amazonaws.com/terraform-aws-ses-lambda-forwarder/terraform-aws-ses-lambda-forwarder-latest.zip"
 
 artifact_filename = "lambda.zip"
