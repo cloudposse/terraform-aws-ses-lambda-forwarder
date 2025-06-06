@@ -10,7 +10,10 @@ badges:
     url: https://github.com/cloudposse/terraform-aws-ses-lambda-forwarder/commits
   - name: Slack Community
     image: https://slack.cloudposse.com/for-the-badge.svg
-    url: https://slack.cloudposse.com
+    url: https://cloudposse.com/slack
+  - name: Tests
+    image: https://img.shields.io/github/actions/workflow/status/cloudposse/terraform-aws-ses-lambda-forwarder/lambda.yml?style=for-the-badge
+    url: https://github.com/cloudposse/terraform-aws-ses-lambda-forwarder/actions/workflows/lambda.yml
 description: This is a terraform module that creates an email forwarder using a combination of AWS SES and Lambda running the [aws-lambda-ses-forwarder](https://www.npmjs.com/package/aws-lambda-ses-forwarder) NPM module.
 introduction: |-
   This module provisions a NodeJS script as a AWS Lambda function that uses the inbound/outbound capabilities of AWS Simple Email Service (SES) to run a "serverless" email forwarding service.
@@ -86,7 +89,5 @@ references:
   - name: aws-lambda-ses-forwarder
     description: A Node.js script for AWS Lambda that uses the inbound/outbound capabilities of AWS Simple Email Service (SES) to run a "serverless" email forwarding service.
     url: https://www.npmjs.com/package/aws-lambda-ses-forwarder
-include:
-  - docs/targets.md
-  - docs/terraform.md
+include: []
 contributors: []
