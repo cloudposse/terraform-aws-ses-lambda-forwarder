@@ -2,6 +2,9 @@ name: terraform-aws-ses-lambda-forwarder
 license: APACHE2
 github_repo: cloudposse/terraform-aws-ses-lambda-forwarder
 badges:
+  - name: Tests
+    image: https://img.shields.io/github/actions/workflow/status/cloudposse/terraform-aws-ses-lambda-forwarder/lambda.yml?style=for-the-badge
+    url: https://github.com/cloudposse/terraform-aws-ses-lambda-forwarder/actions/workflows/lambda.yml
   - name: Latest Release
     image: https://img.shields.io/github/release/cloudposse/terraform-aws-ses-lambda-forwarder.svg?style=for-the-badge
     url: https://github.com/cloudposse/terraform-aws-ses-lambda-forwarder/releases/latest
