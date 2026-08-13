@@ -28,7 +28,7 @@ jobs:
       # Setup GHA Dependencies
       ##################################################
       - name: Use Node.js 22.x
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
           node-version: 22.x
 
@@ -40,7 +40,7 @@ jobs:
       # Checkout the repository
       ##################################################
       - name: Checkout Repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
 
@@ -59,7 +59,7 @@ jobs:
       ##################################################
       - name: Metadata
         id: meta
-        uses: docker/metadata-action@v5
+        uses: docker/metadata-action@dc802804100637a589fabce1cb79ff13a1411302 # v6.2.0
         with:
           images: dummy
           tags: |
@@ -87,7 +87,7 @@ jobs:
           mv "./$FILE_NAME" "$GITHUB_WORKSPACE/$FILE_NAME"
 
       - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v4
+        uses: aws-actions/configure-aws-credentials@e6de054238d6b7531b4efff3b6587d9aade6a06c # v6.2.3
         with:
           aws-region: us-east-2
           role-to-assume: ${{ env.IAM_ROLE_ARN_S3 }}
