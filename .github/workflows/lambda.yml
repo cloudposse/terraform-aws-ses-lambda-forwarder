@@ -16,7 +16,7 @@ permissions:
 env:
   AWS_REGION: us-east-1
   IAM_ROLE_ARN_S3: arn:aws:iam::847349463865:role/cplive-core-ue2-public-lambda-artifacts-gha
-  IAM_ROLE_SESSION_NAME: cloudposse/terraform-aws-ses-lambda-forwarder/ci
+  IAM_ROLE_SESSION_NAME: cloudposse-terraform-aws-ses-lambda-forwarder-ci
   S3_BUCKET: cplive-core-ue2-public-lambda-artifacts
   S3_FOLDER: terraform-aws-ses-lambda-forwarder
 
