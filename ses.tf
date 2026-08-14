@@ -26,6 +26,9 @@ resource "aws_ses_receipt_rule" "default" {
 
   depends_on = [
     aws_ses_receipt_rule_set.default,
-    aws_s3_bucket_policy.default
+    aws_s3_bucket_policy.default,
+    # SES validates it can invoke the Lambda when the rule is created,
+    # so the invoke permission must exist first
+    aws_lambda_permission.ses
   ]
 }
